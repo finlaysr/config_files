@@ -66,15 +66,23 @@ endif
 "   Ps = 5  -> blinking bar (xterm).
 "   Ps = 6  -> steady bar (xterm).
 let &t_SI = "\e[6 q"
-let &t_EI = "\e[2 q"
-
-
+let &t_EI = "\e[2 q"  
+  
+  
 " }}}
 
 " PLUGINS ---------------------------------------------------------------- {{{
 let g:ale_completion_enabled = 1
 set omnifunc=ale#completion#OmniFunc
 let g:airline#extensions#ale#enabled = 1
+
+" Use the gcc compiler to lint c files, with the Wall and pedantic flags
+let c_options = '-Wall, -pedantic'
+let g:ale_cpp_gcc_options = c_options
+let g:ale_cpp_gcc_options = c_options
+let g:ale_cpp_gcc_options = c_options
+
+" Load plugins using Vim Plug plugin manager
 call plug#begin()
 
 " List your plugins here
@@ -87,6 +95,7 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " fuzzy file finding
 Plug 'tpope/vim-fugitive' " Git operations :Git
 Plug 'ryanoasis/vim-devicons'
 Plug 'dense-analysis/ale'
+Plug 'machakann/vim-highlightedyank' 
 
 call plug#end()
 
@@ -98,3 +107,4 @@ colorscheme molokai
 " }}}
 
 nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
+
