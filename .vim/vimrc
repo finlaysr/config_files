@@ -66,23 +66,27 @@ endif
 "   Ps = 5  -> blinking bar (xterm).
 "   Ps = 6  -> steady bar (xterm).
 let &t_SI = "\e[6 q"
-let &t_EI = "\e[2 q"  
-  
-  
+let &t_EI = "\e[2 q"
+
+
 " }}}
 
 " PLUGINS ---------------------------------------------------------------- {{{
-
+let g:ale_completion_enabled = 1
+set omnifunc=ale#completion#OmniFunc
+let g:airline#extensions#ale#enabled = 1
 call plug#begin()
 
 " List your plugins here
 Plug 'flazz/vim-colorschemes' " Install a bunch of color schemes
 Plug 'sheerun/vim-polyglot' " lanjuage packs
 Plug 'preservim/nerdtree'   " File tree, open with :NERDTree
-Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] } " show shortcuts
+Plug 'liuchengxu/vim-which-key' " show shortcuts
 Plug 'vim-airline/vim-airline' " statusline at bottom
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " fuzzy file finding
 Plug 'tpope/vim-fugitive' " Git operations :Git
+Plug 'ryanoasis/vim-devicons'
+Plug 'dense-analysis/ale'
 
 call plug#end()
 
@@ -93,4 +97,4 @@ colorscheme molokai
 
 " }}}
 
-
+nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
