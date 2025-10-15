@@ -66,45 +66,66 @@ endif
 "   Ps = 5  -> blinking bar (xterm).
 "   Ps = 6  -> steady bar (xterm).
 let &t_SI = "\e[6 q"
-let &t_EI = "\e[2 q"  
-  
-  
+let &t_EI = "\e[2 q"
+
+
 " }}}
 
 " PLUGINS ---------------------------------------------------------------- {{{
-let g:ale_completion_enabled = 1
-set omnifunc=ale#completion#OmniFunc
-let g:airline#extensions#ale#enabled = 1
-
-" Use the gcc compiler to lint c files, with the Wall and pedantic flags
-let c_options = '-Wall, -pedantic'
-let g:ale_cpp_gcc_options = c_options
-let g:ale_cpp_gcc_options = c_options
-let g:ale_cpp_gcc_options = c_options
-
 " Load plugins using Vim Plug plugin manager
+" Run :PlugUpdate to install/update, and :PlugClean to remove unused plugins
+
 call plug#begin()
 
 " List your plugins here
 Plug 'flazz/vim-colorschemes' " Install a bunch of color schemes
+
 Plug 'sheerun/vim-polyglot' " lanjuage packs
+
 Plug 'preservim/nerdtree'   " File tree, open with :NERDTree
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'ryanoasis/vim-devicons'
+
+Plug 'yegappan/lsp' " lsp for inline errors and autocompletion
+
 Plug 'liuchengxu/vim-which-key' " show shortcuts
-Plug 'vim-airline/vim-airline' " statusline at bottom
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " fuzzy file finding
 Plug 'tpope/vim-fugitive' " Git operations :Git
-Plug 'ryanoasis/vim-devicons'
-Plug 'dense-analysis/ale'
-Plug 'machakann/vim-highlightedyank' 
+Plug 'machakann/vim-highlightedyank'
+
+Plug 'vim-airline/vim-airline' " statusline at bottom
+Plug 'vim-airline/vim-airline-themes'
 
 call plug#end()
 
-" :PlugUpdate, :PlugClean
 
 set background=dark    " Setting dark mode
 colorscheme molokai
 
-" }}}
+" Start NERDTree and put the cursor back in the other window.
+autocmd VimEnter * NERDTree | wincmd p
+" Exit Vim if NERDTree is the only window remaining in the only tab.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | call feedkeys(":quit\<CR>:\<BS>") | endif
 
+" For vim-devicons
+set encoding=UTF-8
+
+" For vim-airline
+let g:airline_powerline_fonts = 1 " nerd fonts seem to work as well
+
+" For WhichKey
 nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
 
+" Clangd language server
+let lspOpts = #{autoHighlightDiags: v:true}
+autocmd User LspSetup call LspOptionsSet(lspOpts)
+
+let lspServers = [#{
+        \         name: 'clang',
+        \         filetype: ['c', 'cpp'],
+        \         path: expand('~/.vim/lsp/clangd_21.1.0/bin/clangd'),
+        \         args: ['--background-index']
+        \ }]
+autocmd User LspSetup call LspAddServer(lspServers)
+
+" }}}
