@@ -91,7 +91,9 @@ Plug 'yegappan/lsp' " lsp for inline errors and autocompletion
 Plug 'liuchengxu/vim-which-key' " show shortcuts
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " fuzzy file finding
 Plug 'tpope/vim-fugitive' " Git operations :Git
+Plug 'airblade/vim-gitgutter' " Show git changes on left of the line numbers
 Plug 'machakann/vim-highlightedyank'
+Plug 'romainl/vim-cool' " Disable search highlighting after finished searching
 
 Plug 'vim-airline/vim-airline' " statusline at bottom
 Plug 'vim-airline/vim-airline-themes'
